@@ -21,7 +21,6 @@ void hashTab::addDoc(string name) {
     int index = hashInd(name);
     if(HashTable[index]->name == ""){
         HashTable[index]->name = name;
-
     }
     else{
         doc *ptr = HashTable[index];
@@ -59,12 +58,7 @@ int hashTab::hashInd(string key){
 
     for(int i = 0; i < len; i++){
         cout << "Index " << i << " is " << (int)key[i] << endl;
-
-      if((isalnum((int)key[i]))){
-            hash += (int)key[i];
-
-            cout << "Hash: " << hash << endl;
-        }
+        hash += (int)key[i];
     }
 
     index = hash % tableSize;

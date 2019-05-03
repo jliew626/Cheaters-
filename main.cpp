@@ -41,12 +41,8 @@ int main()
 
     string word;
     string wordCpy;
+    string wordQueue;
     hashTab hashObj;
-
-    index = hashObj.hashInd("Jesus");
-
-    cout << "The index size is " << index << endl << endl;
-
 
     string dir = string("/Users/jeffreyliew/CLionProjects/plagiarismCatcher/sm_doc_set");
     vector<string> files = vector<string>();
@@ -67,16 +63,14 @@ int main()
                         word[j] += 32;
                     }
                     wordCpy += word[j];
+
                 }
             }
+            wordQueue += wordCpy;
             chunk.push(wordCpy);
-            cout << chunk.back() << endl;
 
             if(chunk.size() == 6){
-                cout << "Success" << endl;
-                //call hash comparison
-
-
+                hashObj.hashInd(wordQueue);
                 //pop first one in queue
                 chunk.pop();
             }
