@@ -14,11 +14,12 @@ using namespace std;
 class hashTab{
 
 private:
-    static const int tableSize = 1000;
+    static const int tableSize = 50000;
     static const int chunkSize = 6;
 
     struct doc{
         string name;
+        string chunk;
         doc *next;
     };
 
@@ -27,8 +28,10 @@ private:
 public:
     hashTab();
     int hashInd(string key);
-    void addDoc(string name);
+    void addDoc(string key, string name);
     int numDoc(int index);
+    int compDoc(string n1, string n2);
+
 };
 
 
