@@ -11,9 +11,12 @@
  * UTEID: ael2575 & jyl662
  * Section 5 digit ID: 15975
 */
+//
+// Created by Jeffrey Liew on 2019-05-02.
+//
 
-#ifndef HASHTAB_H
-#define HASHTAB_H
+#ifndef PLAGIARISMCATCHER_HASH_H
+#define PLAGIARISMCATCHER_HASH_H
 
 #include <cstdlib>
 #include <string>
@@ -44,4 +47,9 @@ public:
 
 };
 
-#endif //HASHTAB_H
+
+
+
+#endif //PLAGIARISMCATCHER_HASH_H
+
+

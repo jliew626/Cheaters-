@@ -1,4 +1,16 @@
-
+// main.cpp
+/*Student information for project:
+ *
+ * Replace <NAME> with your name.
+ *
+ * On my honor, <Adin Lee>, this programming project is my own work
+ * and I have not provided this code to any other student.
+ *
+ * Name: Adin Lee & Jeffrey Liew
+ * email address: adinlee@utexas.edu & jliew626@utexas.edu
+ * UTEID: ael2575 & jyl662
+ * Section 5 digit ID: 15975
+*/
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
@@ -32,24 +44,34 @@ int getdir (string dir, vector<string> &files)
     return 0;
 }
 
-int main(){
+void swap(int *xp, int *yp)
+{
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+void swapStr(string *xp, string *yp)
+{
+    string temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+int main(int argc, char *argv[]){
 
     int index;
     int words = 0;
     int count = 0;
-    int chunkSize = 0;
-    int cPlag = 0;
-    cout << "Identify a chunk size: ";
-    cin >> chunkSize;
-    cout << endl << "Give an appropriate plagrism count: ";
-    cin >> cPlag;
+    int chunkSize = atoi(argv[2]);
+    int cPlag = atoi(argv[3]);
 
     string word;
     string wordCpy;
     string wordQueue;
     hashTab hashObj;
 
-    string dir = string("/Users/jeffreyliew/CLionProjects/plagiarismCatcher/sm_doc_set");
+    string dir = string(argv[1]);
     vector<string> files = vector<string>();
 
     getdir(dir,files);
@@ -64,7 +86,7 @@ int main(){
         ifstream inFile;
         char c;
         int space = 0;
-        inFile.open("/Users/jeffreyliew/CLionProjects/plagiarismCatcher/sm_doc_set/" + files[i]);
+        inFile.open((string(argv[1]) + "/" + files[i]));
         while(inFile >> word) {
             // turn words into alphanumeric characters only
             for (int j = 0; j < word.length(); j++) {
@@ -104,8 +126,8 @@ int main(){
                     chunk.push(chunk.front());
                     wordQueue += chunk.front();
                     chunk.pop();
-
                 }
+                cout << "Document " << files[i] << " has key: " << wordQueue << endl;
             }
             wordCpy = "";
             words++;
@@ -113,7 +135,9 @@ int main(){
         words = 0;
         inFile.close();
     }
-
+    
+    cout << endl << "Plagrism Result " << endl;
+    cout << "--------------------------------------------------" << endl;
     /*
     for(int a = 0; a < 50000; a++){
         cout << "Index " << a << " has " << hashObj.numDoc(a) << " documents." << endl;
@@ -127,20 +151,7 @@ int main(){
         for(int j = 1; j < sCheck; j++){
             arr[i][j] = 0;
         }
-        cout << endl;
     }
-
-    /*
-    int arr[sCheck+1][sCheck+1];
-    arr[0][0] = 0;
-    for(int i = 1; i < sCheck; i++){
-        arr[i][0] = i;
-        arr[0][i] = i;
-        for(int j = 1; j < sCheck; j++){
-            arr[i][j] = 0;
-        }
-        cout << endl;
-    }*/
 
     /*
     cout << "Making Array" << endl;
@@ -150,6 +161,9 @@ int main(){
         }
         cout << endl;
     }*/
+    int nCount = 0;
+    vector<int> numPlag(0);
+    vector<string> docPlag(0);
 
     for(int i = 0; i < sCheck; i++) {
         for (int j = 0; j < sCheck; j++) {
@@ -158,12 +172,39 @@ int main(){
                     arr[i][j] = hashObj.compDoc(files[i], files[j]);
                     if(arr[i][j] > cPlag){
                         cout << "We found " << arr[i][j] << " chunks of similaries between " << files[i] << " and " << files[j] << "." << endl;
+                        numPlag.push_back(arr[i][j]);
+                        docPlag.push_back(files[i]);
+                        docPlag.push_back(files[j]);
+                        nCount++;
                     }
                 }
-
             }
         }
     }
+
+    //Sorting Array
+    int i, j, max;
+    // One by one move boundary of unsorted subarray
+    for (i = 0; i < nCount; i++)
+    {
+        max = i;
+        for (j = i+1; j < nCount; j++) {
+            if (numPlag[j] > numPlag[max]){
+                max = j;
+            }
+        }
+        swap(&numPlag[max], &numPlag[i]);
+        swapStr(&docPlag[max*2], &docPlag[i*2]);
+        swapStr(&docPlag[max*2 + 1], &docPlag[i*2 + 1]);
+    }
+
+    cout << endl << "Sorted Results: " << endl;
+    cout << "--------------------------------------------------" << endl;
+    for(int i = 0; i < nCount; i++){
+        //print values
+        cout << numPlag[i] << ": " << docPlag[i*2] << " & " << docPlag[i*2+ 1] << endl;
+    }
+
     /*cout << "Making Array" << endl;
     for(int i = 0; i < sCheck; i++){
         for(int j = 0; j < sCheck; j++){

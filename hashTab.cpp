@@ -1,3 +1,16 @@
+// hashTab.cpp
+/*Student information for project:
+ *
+ * Replace <NAME> with your name.
+ *
+ * On my honor, <Adin Lee>, this programming project is my own work
+ * and I have not provided this code to any other student.
+ *
+ * Name: Adin Lee & Jeffrey Liew
+ * email address: adinlee@utexas.edu & jliew626@utexas.edu
+ * UTEID: ael2575 & jyl662
+ * Section 5 digit ID: 15975
+*/
 //
 // Created by Jeffrey Liew on 2019-05-02.
 //
