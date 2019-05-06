@@ -86,7 +86,8 @@ int main(int argc, char *argv[]){
         ifstream inFile;
         char c;
         int space = 0;
-        inFile.open((string(argv[1]) + "/" + files[i]));
+        string toChar = (string(argv[1]) + "/" + files[i]);
+        inFile.open(toChar.c_str());
         while(inFile >> word) {
             // turn words into alphanumeric characters only
             for (int j = 0; j < word.length(); j++) {
@@ -135,7 +136,7 @@ int main(int argc, char *argv[]){
         words = 0;
         inFile.close();
     }
-    
+
     cout << endl << "Plagrism Result " << endl;
     cout << "--------------------------------------------------" << endl;
     /*
