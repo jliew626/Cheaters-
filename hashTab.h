@@ -15,8 +15,8 @@
 // Created by Jeffrey Liew on 2019-05-02.
 //
 
-#ifndef PLAGIARISMCATCHER_HASH_H
-#define PLAGIARISMCATCHER_HASH_H
+#ifndef HASHTAB_H
+#define HASHTAB_H
 
 #include <cstdlib>
 #include <string>
@@ -27,7 +27,7 @@ using namespace std;
 class hashTab{
 
 private:
-    static const int tableSize = 50000;
+    static const int tableSize = 250000;
     static const int chunkSize = 6;
 
     struct doc{
@@ -40,7 +40,7 @@ private:
 
 public:
     hashTab();
-    int hashInd(string key);
+    long long int hashInd(string key);
     void addDoc(string key, string name);
     int numDoc(int index);
     int compDoc(string n1, string n2);
@@ -50,6 +50,4 @@ public:
 
 
 
-#endif //PLAGIARISMCATCHER_HASH_H
-
-
+#endif //HASHTAB_H

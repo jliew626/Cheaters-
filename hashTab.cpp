@@ -18,6 +18,7 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <math.h>
 #include "hashTab.h"
 
 using namespace std;
@@ -72,18 +73,20 @@ int hashTab::numDoc(int index){
     }
 }
 
-int hashTab::hashInd(string key){
-    unsigned int hash = 0;
-    int index;
+long long int hashTab::hashInd(string key){
+    unsigned long long hash = 0;
+    unsigned long long index;
     int len = (int)key.length();
 
     for(int i = 0; i < len; i++){
-        hash = hash*54059 ^ (76963*(int)key[i]);
+        //hash += hash*54059 ^ (76963*(int)key[i]);
+        //hash += (54059*key[i]) ^ (unsigned long long)(233*i);
+        hash += (int)key[i] * (unsigned long long)(pow(23,i));
     }
 
-    index = hash % tableSize;
+    hash = hash % tableSize;
 
-    return index;
+    return hash;
 
 }
 

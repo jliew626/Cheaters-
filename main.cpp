@@ -1,3 +1,4 @@
+
 // main.cpp
 /*Student information for project:
  *
@@ -84,51 +85,36 @@ int main(int argc, char *argv[]){
         //cout << i << files[i] << endl; SHOW FILE NAME
         queue <string> chunk;
         ifstream inFile;
-        char c;
-        int space = 0;
+        int queueSize = 0;
         string toChar = (string(argv[1]) + "/" + files[i]);
         inFile.open(toChar.c_str());
         while(inFile >> word) {
             // turn words into alphanumeric characters only
             for (int j = 0; j < word.length(); j++) {
                 if (isalnum(word[j])) {
-                    if (isupper((int) word[j])) {
-                        word[j] += 32; //make lowercase
+                    if (islower((int)word[j])) {
+                        wordCpy += (word[j] - 32); //make upperrcase
+                    } else {
+                        wordCpy += word[j];
                     }
-                    wordCpy += word[j];
                 }
             }
             wordQueue += wordCpy;
+            queueSize++;
             chunk.push(wordCpy); // push
-            //int cInd[1000]; // checks if there are any matching indexes
-            //int kInd;
-            //int k = 0;
-            //bool restart = false;
-            if (chunk.size() == chunkSize) {
-                //Checking for Collison
-                /*while(cInd[index] == 1){
-                    if(k == 1000){
-                        cInd[index] = 0;
-                    }
-                    if(index + k > 999){
-                        k = index;
-                        index = 0;
-                        restart = true;
-                    }
-                    else if(restart){
-                        k++;
-                    }
-                }*/
+            if (queueSize == chunkSize) {
                 hashObj.addDoc(wordQueue, files[i]);
-                //pop first one in queue
-                chunk.pop();
+                cout << "Document " << files[i] << " has key: " << wordQueue << endl;
+                chunk.pop(); //pop first one in queue
                 wordQueue = "";
                 for(int k = 0; k < 5; k++) {
-                    chunk.push(chunk.front());
+                    //chunk.push(chunk.front);
                     wordQueue += chunk.front();
+                    wordCpy = chunk.front();
                     chunk.pop();
+                    chunk.push(wordCpy);
                 }
-                cout << "Document " << files[i] << " has key: " << wordQueue << endl;
+                queueSize--;
             }
             wordCpy = "";
             words++;
@@ -139,23 +125,27 @@ int main(int argc, char *argv[]){
 
     cout << endl << "Plagrism Result " << endl;
     cout << "--------------------------------------------------" << endl;
-    /*
-    for(int a = 0; a < 50000; a++){
+
+    // kind of a debug tool for hashtable
+    /*for(int a = 0; a < 250000; a++){
         cout << "Index " << a << " has " << hashObj.numDoc(a) << " documents." << endl;
     }*/
 
     // 2D Array
     int sCheck = (int)files.size();
     int arr[sCheck][sCheck];
-    arr[0][0] = 0;
-    for(int i = 0; i < sCheck; i++){
-        for(int j = 1; j < sCheck; j++){
-            arr[i][j] = 0;
-        }
-    }
-
-    /*
+    /*arr[0][0] = 0;
     cout << "Making Array" << endl;
+    for(int i = 0; i < sCheck; i++){
+        for(int j = 0; j < sCheck; j++){
+            arr[i][j] = 0;
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }*/
+
+
+    /*cout << "Making Array" << endl;
     for(int i = 0; i < sCheck; i++){
         for(int j = 0; j < sCheck; j++){
             cout << arr[i][j] << " ";
@@ -215,4 +205,3 @@ int main(int argc, char *argv[]){
     }*/
     return 0;
 }
-
