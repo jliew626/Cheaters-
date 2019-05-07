@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
             chunk.push(wordCpy); // push
             if (queueSize == chunkSize) {
                 hashObj.addDoc(wordQueue, files[i]);
-                cout << "Document " << files[i] << " has key: " << wordQueue << endl;
+                //cout << "Document " << files[i] << " has key: " << wordQueue << endl;
                 chunk.pop(); //pop first one in queue
                 wordQueue = "";
                 for(int k = 0; k < 5; k++) {
@@ -119,6 +119,8 @@ int main(int argc, char *argv[]){
             wordCpy = "";
             words++;
         }
+        wordQueue = "";
+        queueSize = 0;
         words = 0;
         inFile.close();
     }

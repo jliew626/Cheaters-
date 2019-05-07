@@ -99,9 +99,15 @@ int hashTab::compDoc(string n1, string n2){
         while(ptr->next != NULL){
             if(ptr->name == n1){
                 flag1 = true;
+                if(ptr->next->name == n2){
+                    flag2 = true;
+                }
             }
-            if(ptr->name == n2){
+            else if(ptr->name == n2){
                 flag2 = true;
+                if(ptr->next->name == n1){
+                    flag1 = true;
+                }
             }
             ptr = ptr->next;
         }
