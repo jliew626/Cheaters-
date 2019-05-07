@@ -33,7 +33,7 @@ hashTab::hashTab(){
 }
 
 void hashTab::addDoc(string key, string name) {
-    int index = hashInd(key);
+    long long int index = hashInd(key);
     string check = HashTable[index]->name;
     if(HashTable[index]->name == ""){
         HashTable[index]->name = name;
@@ -76,7 +76,7 @@ int hashTab::numDoc(int index){
 long long int hashTab::hashInd(string key){
     unsigned long long hash = 0;
     unsigned long long index;
-    int len = (int)key.length();
+    long int len = (int)key.length();
 
     for(int i = 0; i < len; i++){
         //hash += hash*54059 ^ (76963*(int)key[i]);
@@ -96,7 +96,7 @@ int hashTab::compDoc(string n1, string n2){
     int count = 0;
     for(int i = 0; i < tableSize; i++){
         doc *ptr = HashTable[i];
-        while(ptr->next != NULL){
+        while(ptr->next != NULL && !(flag1 && flag2)){
             if(ptr->name == n1){
                 flag1 = true;
                 if(ptr->next->name == n2){
@@ -116,6 +116,9 @@ int hashTab::compDoc(string n1, string n2){
             flag1 = false;
             flag2 = false;
         }
+        //reset flags
+        flag1 = false;
+        flag2 = false;
     }
     return count;
 }

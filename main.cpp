@@ -61,9 +61,7 @@ void swapStr(string *xp, string *yp)
 
 int main(int argc, char *argv[]){
 
-    int index;
     int words = 0;
-    int count = 0;
     int chunkSize = atoi(argv[2]);
     int cPlag = atoi(argv[3]);
 
@@ -80,9 +78,8 @@ int main(int argc, char *argv[]){
     files.erase(files.begin());
     files.erase(files.begin());
 
-
     for (unsigned int i = 0;i < files.size();i++) {
-        //cout << i << files[i] << endl; SHOW FILE NAME
+        //cout << i << files[i] << endl; //SHOW FILE NAME
         queue <string> chunk;
         ifstream inFile;
         int queueSize = 0;
@@ -93,7 +90,7 @@ int main(int argc, char *argv[]){
             for (int j = 0; j < word.length(); j++) {
                 if (isalnum(word[j])) {
                     if (islower((int)word[j])) {
-                        wordCpy += (word[j] - 32); //make upperrcase
+                        wordCpy += (word[j] - 32); //make uppercase
                     } else {
                         wordCpy += word[j];
                     }
@@ -101,10 +98,10 @@ int main(int argc, char *argv[]){
             }
             wordQueue += wordCpy;
             queueSize++;
-            chunk.push(wordCpy); // push
-            if (queueSize == chunkSize) {
+            chunk.push(wordCpy); // push into queue
+            if (queueSize == chunkSize) {    // enters when queue is full
                 hashObj.addDoc(wordQueue, files[i]);
-                //cout << "Document " << files[i] << " has key: " << wordQueue << endl;
+                cout << "Document " << files[i] << " has key: " << wordQueue << endl;
                 chunk.pop(); //pop first one in queue
                 wordQueue = "";
                 for(int k = 0; k < 5; k++) {
@@ -120,12 +117,15 @@ int main(int argc, char *argv[]){
             words++;
         }
         wordQueue = "";
-        queueSize = 0;
+        while(queueSize != 0){
+            chunk.pop();
+            queueSize--;
+        }
         words = 0;
         inFile.close();
     }
 
-    cout << endl << "Plagrism Result " << endl;
+    cout << endl << "Plagiarism Result " << endl;
     cout << "--------------------------------------------------" << endl;
 
     // kind of a debug tool for hashtable
@@ -164,7 +164,7 @@ int main(int argc, char *argv[]){
                 if(i > j){
                     arr[i][j] = hashObj.compDoc(files[i], files[j]);
                     if(arr[i][j] > cPlag){
-                        cout << "We found " << arr[i][j] << " chunks of similaries between " << files[i] << " and " << files[j] << "." << endl;
+                        cout << "We found " << arr[i][j] << " chunks of similarities between " << files[i] << " and " << files[j] << "." << endl;
                         numPlag.push_back(arr[i][j]);
                         docPlag.push_back(files[i]);
                         docPlag.push_back(files[j]);

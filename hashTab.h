@@ -27,7 +27,7 @@ using namespace std;
 class hashTab{
 
 private:
-    static const int tableSize = 250000;
+    static const int tableSize = 255000;
     static const int chunkSize = 6;
 
     struct doc{
