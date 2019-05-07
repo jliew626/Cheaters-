@@ -1,0 +1,7 @@
+1. This project includes 5 files: main.cpp, hashTab.cpp, hashTab.h, makefile, and READ_ME
+2. The makefile will compile and create an executable named plagiarismCatcher.
+3. To run the program, the command line takes in 3 arguments after the executable.
+4. In order: directory of text files to compare, 'chunk' size, and minimum common sequences for 'plagiarism'.
+5. For example, the program will run with the line ./plagiarismCatcher sm_doc_set 6 200
+6. As a result of the example in 5, the program will produce a list of all possible n-word sequences,
+   all of the files with chunks above the minimum required for plagiarism, and the sorted list of said files.
